@@ -154,14 +154,14 @@ const _slideEnam = function () {
 
 
 new TypeIt("#teks1", {
-  strings: ["Today, I send all my best prayers to you.", "May the things that make you fall also become your reasons to keep growing.", "May the world always protect you wherever you are.", "May your days always be accompanied by love that never has limits.", "May every step you take be made easy until you achieve what you want."],
+  strings: ["Today, I send all my best prayers to you tricy.", "May the things that make you fall also become your reasons to keep growing.", "May the world always protect you wherever you are.", "May your days always be accompanied by love that never has limits.", "May every step you take be made easy until you achieve what you want."],
   startDelay: 4000,
   speed: 75,
   waitUntilVisible: true
 }).go();
 
 new TypeIt("#teks2", {
-  strings: ["With or without our friendship, may the universe always make you happy in whatever way it takes.", " ", "Regards, thank you for sticking around this far.", " ", "- Wish all you the best"],
+  strings: ["With or without our friendship, may the universe always make you happy in whatever way it takes.", " ", "May God bless you, thank you for sticking around this far.", " ", "- Wish all you the best"],
   startDelay: 2000,
   speed: 75,
   waitUntilVisible: true
@@ -169,7 +169,7 @@ new TypeIt("#teks2", {
 
 
 new TypeIt("#trims", {
-  strings: ["Terimakasih."],
+  strings: ["Amer"],
   startDelay: 2000,
   speed: 150,
   loop: false,
@@ -446,5 +446,6 @@ function confetti() {
 
   if (!onlyOnKonami) poof();
 };
+
 
 

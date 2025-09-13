@@ -1,35 +1,33 @@
-body,
-html {
-  height: 100%;  
+/* === الخطوط === */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Roboto:wght@400;500;700&family=Handlee&display=swap');
+
+html, body {
+  height: 100%;
   font-family: 'Quicksand', sans-serif;
   text-align: center;
+  margin: 0;
+  padding: 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
+/* === الخلفية === */
 .bg {
-  /* Location of the image */
   background-image: url(./img/background.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-
-  /* This is what makes the background image rescale based
-     on the container's size */
   background-size: cover;
-
-  /* Set a background color that will be displayed
-     while the background image is loading */
   background-color: #FEC0CD;
   height: 100%;
 }
 
-
+/* === الصور === */
 .img {
   display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 20px auto 30px auto;
   position: relative;
-  top: 20px;
-  margin-bottom: 30px;
   width: 350px;
 }
 
@@ -42,21 +40,10 @@ html {
   max-width: 400px;
   min-width: 300px;
   margin-top: 100px;
-  /* margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px; */
   display: inline-block;
-  /* vertical-align: middle;
-  line-height: normal; */
 }
 
-
-
-/* Paper */
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-@import url(https://fonts.googleapis.com/css?family=Handlee);
-
-
+/* === الورقة === */
 .paper {
   font-family: 'Roboto', sans-serif;
   position: relative;
@@ -70,7 +57,7 @@ html {
   line-height: normal;
   background: #fafafa;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
@@ -115,6 +102,7 @@ html {
   z-index: 1;
 }
 
+/* === الصندوق === */
 .kotak {
   position: relative;
   width: 90%;
@@ -127,25 +115,26 @@ html {
   display: inline-block;
   background: #fafafa;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
+/* === الأزرار === */
 .btn {
   border-radius: 40px;
 }
 
-#slideLima {
+/* === مواضع خاصة === */
+#slideLima, #trims {
   position: relative;
   top: 300px;
 }
 
 #trims {
-  position: relative;
-  top: 300px;
   display: inline-block;
 }
 
+/* === العناوين والقوائم === */
 h1 {
   font-weight: normal;
 }
@@ -166,12 +155,7 @@ li span {
   font-size: 24px;
 }
 
-body {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
+/* === الحاوية === */
 .container {
   color: #333;
   position: relative;

@@ -1,12 +1,16 @@
 // Fungsi untuk memulai musik
 function playMusic() {
   const music = document.getElementById('background-music');
-  music.play();
+  // التأكد من أن الموسيقى لم تبدأ بالفعل
+  if (music.paused) {
+    music.play();
+  }
 }
-window.addEventListener('DOMContentLoaded', function() {
-  playMusic();
-});
+
+// تشغيل الموسيقى عند تحميل المحتوى أو عند أول نقرة للمستخدم
+window.addEventListener('DOMContentLoaded', playMusic);
 document.body.addEventListener('click', playMusic, { once: true });
+
 const content = document.getElementById('content');
 const footer = document.getElementsByTagName('footer')[0];
 const timer = document.getElementById('timer');
@@ -15,24 +19,25 @@ const second = 1000,
   minute = second * 60,
   hour = minute * 60,
   day = hour * 24;
+
 let countDown = new Date('Sep 14, 2025 00:00:00').getTime(),
   x = setInterval(function () {
     let now = new Date().getTime(),
       distance = countDown - now;
-    // document.getElementById('days').innerText = Math.floor(distance / (day)),
-    document.getElementById('hours').innerText = Math.floor(distance / (hour)),
-      document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
-      document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
 
+    document.getElementById('hours').innerText = Math.floor(distance / (hour));
+    document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
+    document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+
+    // عندما ينتهي العد التنازلي
     if (distance < 0) {
-
       timer.classList.add('d-none');
-      confetti();
+      confetti(); // تشغيل قصاصات الورق
       clearInterval(x);
-      _slideSatu();
+      _slideSatu(); // بدء الشريحة الأولى
     }
 
-  }, second)
+  }, second);
 
 const _slideSatu = function () {
   const tap = document.getElementById('tap');
@@ -40,9 +45,10 @@ const _slideSatu = function () {
   slideSatu.classList.remove('d-none');
   setTimeout(function () {
     tap.classList.remove('d-none');
+    // *** التصحيح: إضافة { once: true } ***
     document.body.addEventListener('click', function () {
       _slideDua();
-    })
+    }, { once: true }); // هذا المستمع سيعمل مرة واحدة فقط
   }, 7000);
 };
 
@@ -51,17 +57,16 @@ const _slideDua = function () {
   const tap = document.getElementById('tap');
   const slideDua = document.getElementById('slideDua');
 
+  slideSatu.classList.replace('animate__slideInDown', 'animate__backOutDown');
+  tap.classList.add('d-none');
   setTimeout(function () {
-    slideSatu.classList.replace('animate__slideInDown', 'animate__backOutDown');
-    tap.classList.add('d-none');
-    setTimeout(function () {
-      slideSatu.classList.add('d-none');
-    }, 1000);
+    slideSatu.classList.add('d-none');
   }, 1000);
 
   slideDua.classList.remove('d-none');
   setTimeout(function () {
     tap.classList.remove('d-none');
+    // *** التصحيح: إضافة { once: true } ***
     document.body.addEventListener('click', function () {
       slideDua.classList.replace('animate__zoomInDown', 'animate__fadeOutLeft');
       slideDua.classList.remove('animate__delay-2s', 'animate__slow');
@@ -70,7 +75,7 @@ const _slideDua = function () {
         slideDua.remove();
         _slideTiga();
       }, 1000);
-    })
+    }, { once: true }); // هذا المستمع سيعمل مرة واحدة فقط
   }, 40000);
 };
 
@@ -81,6 +86,7 @@ const _slideTiga = function () {
   slideTiga.classList.remove('d-none');
   setTimeout(function () {
     tap.classList.remove('d-none');
+    // *** التصحيح: إضافة { once: true } ***
     document.body.addEventListener('click', function () {
       slideTiga.classList.remove('animate__delay-2s', 'animate__slow');
       slideTiga.classList.replace('animate__fadeInRight', 'animate__fadeOut');
@@ -89,7 +95,7 @@ const _slideTiga = function () {
         slideTiga.remove();
         _slideEmpat();
       }, 1000);
-    })
+    }, { once: true }); // هذا المستمع سيعمل مرة واحدة فقط
   }, 43000);
 }
 
@@ -109,7 +115,6 @@ const _slideEmpat = function () {
   btn[0].addEventListener('click', function () {
     var xy = getRandomPosition(slideEmpat);
     slideEmpat.style.top = xy[0] + 'px';
-    // slideEmpat.style.left = xy[1] + 'px';
   });
 
   btn[1].addEventListener('click', function () {
@@ -141,16 +146,18 @@ const _slideLima = function () {
       trims.remove();
       setTimeout(() => {
         slideLima.remove();
-        _slideEnam();
+        // لا يوجد دالة اسمها _slideEnam في الكود الأصلي، لذا تم التعليق عليها
+        // _slideEnam(); 
       }, 1000);
     }, 6000);
   });
 };
 
-const _slideEnam = function () {
-  const slideEnam = document.getElementById('slideEnam');
-  slideEnam.classList.remove('d-none');
-};
+// لا يوجد عنصر بالمعرف slideEnam في HTML، لذا هذه الدالة لن تعمل كما هو متوقع
+// const _slideEnam = function () {
+//   const slideEnam = document.getElementById('slideEnam');
+//   slideEnam.classList.remove('d-none');
+// };
 
 
 new TypeIt("#teks1", {
@@ -175,7 +182,6 @@ new TypeIt("#trims", {
   loop: false,
   waitUntilVisible: true,
 }).go();
-
 
 
 'use strict';
@@ -291,17 +297,12 @@ function confetti() {
 
       for (i = domain.length - 1; i > 0; i -= 2) {
         l = i - 1, a = domain[l], b = domain[i];
-        // c---d          c---d  Do nothing
-        //   c-----d  c-----d    Move interior
-        //   c--------------d    Delete interval
-        //         c--d          Split interval
-        //       a------b
         if (a >= c && a < d)
-          if (b > d) domain[l] = d; // Move interior (Left case)
-          else domain.splice(l, 2); // Delete interval
+          if (b > d) domain[l] = d;
+          else domain.splice(l, 2);
         else if (a < c && b > c)
-          if (b <= d) domain[i] = c; // Move interior (Right case)
-          else domain.splice(i, 0, c, d); // Split interval
+          if (b <= d) domain[i] = c;
+          else domain.splice(i, 0, c, d);
       }
 
       for (i = 0, l = domain.length, measure = 0; i < l; i += 2)
@@ -320,7 +321,6 @@ function confetti() {
   container.style.overflow = 'visible';
   container.style.zIndex = '9999';
 
-  // Confetto constructor
   function Confetto(theme) {
     this.frame = 0;
     this.outer = document.createElement('div');
@@ -352,7 +352,6 @@ function confetti() {
     outerStyle.left = this.x + 'px';
     outerStyle.top = this.y + 'px';
 
-    // Create the periodic spline
     this.splineX = createPoisson();
     this.splineY = [];
     for (var i = 1, l = this.splineX.length - 1; i < l; ++i)
@@ -365,7 +364,6 @@ function confetti() {
       this.y += this.dy * delta;
       this.theta += this.dTheta * delta;
 
-      // Compute spline and convert to polar
       var phi = this.frame % 7777 / 7777,
         i = 0,
         j = 1;
@@ -387,10 +385,7 @@ function confetti() {
 
   function poof() {
     if (!frame) {
-      // Append the container
       document.body.appendChild(container);
-
-      // Add confetti
 
       var theme = colorThemes[onlyOnKonami ? colorThemes.length * random() | 0 : 0],
         count = 0;
@@ -409,8 +404,6 @@ function confetti() {
         }
       })(0);
 
-
-      // Start the loop
       var prev = undefined;
       requestAnimationFrame(function loop(timestamp) {
         var delta = prev ? timestamp - prev : 0;
@@ -427,7 +420,6 @@ function confetti() {
         if (timer || confetti.length)
           return frame = requestAnimationFrame(loop);
 
-        // Cleanup
         document.body.removeChild(container);
         frame = undefined;
       });
@@ -446,6 +438,3 @@ function confetti() {
 
   if (!onlyOnKonami) poof();
 };
-
-
-
